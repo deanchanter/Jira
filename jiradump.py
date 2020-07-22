@@ -26,6 +26,11 @@ key =
 jirafilter = 
 jira = jira = JIRA({'server':server}, basic_auth=(usrn, key))
 
+#mapping states
+#todo = 
+#in_Progress = 
+#done = 
+
 #print(issue)
 
 block_size = 100
@@ -74,7 +79,7 @@ for issue in allissues:
 
 
 issues['date'] = pd.to_datetime(issues['date'],utc = True).dt.date
-#AFGROUP
+
 todo = ['Funnel','ToDo', 'To Do','Reopened', 'Blocked', 'Estimation', 
         'Ready to Work', 'Intake Funnel','Review for Prioritization','Profolio Backlog',
         'Reviewing','Analyzing','No Entry','Received','Investigation','Approved', 
@@ -93,17 +98,19 @@ done = ['Approved for Release','Resolved','Removed','Done','Cancelled', 'Complet
         'Observing','Rejected', 'Ready for CAB', 'CAB Approval','Stage Deployment',
         'Prod Deployment', 'Maintenance','Closed']
 
-issues = issues.replace(todo, 'TODO')
-issues = issues.replace(inP, 'INPROGRESS')
-issues = issues.replace(done, 'DONE')
+if todo != None:
+    issues = issues.replace(todo, 'TODO')
+if inProgress != None:
+    issues = issues.replace(inProgress, 'INPROGRESS')
+if done !=None:
+    issues = issues.replace(done, 'DONE')
 
 
 issues_pivot=issues.pivot_table(index= ['key', 'project','status.name'] , columns='toString',values= 'date', aggfunc = 'min' )
 
 issues_final = issues_pivot.reset_index()
 
-print(issues_final.head(25))
-
-issues_final = issues_final.reindex(['key','TODO','INPROGRESS','DONE','project','status.name'],axis=1)
+if  (todo != None &  inProgress != None & done !=None):
+    issues_final = issues_final.reindex(['key','TODO','INPROGRESS','DONE','project','status.name'],axis=1)
 
 issues_final.to_csv("jiradump.csv")
