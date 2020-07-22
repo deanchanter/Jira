@@ -27,9 +27,9 @@ jirafilter =
 jira = jira = JIRA({'server':server}, basic_auth=(usrn, key))
 
 #mapping states
-#todo = 
-#in_Progress = 
-#done = 
+todo = []
+in_Progress = []
+done = []
 
 #print(issue)
 
@@ -98,11 +98,11 @@ done = ['Approved for Release','Resolved','Removed','Done','Cancelled', 'Complet
         'Observing','Rejected', 'Ready for CAB', 'CAB Approval','Stage Deployment',
         'Prod Deployment', 'Maintenance','Closed']
 
-if todo != None:
+if todo:
     issues = issues.replace(todo, 'TODO')
-if inProgress != None:
+if inProgress:
     issues = issues.replace(inProgress, 'INPROGRESS')
-if done !=None:
+if done:
     issues = issues.replace(done, 'DONE')
 
 
@@ -110,7 +110,7 @@ issues_pivot=issues.pivot_table(index= ['key', 'project','status.name'] , column
 
 issues_final = issues_pivot.reset_index()
 
-if  (todo != None &  inProgress != None & done !=None):
+if  (todo &  inProgress & done):
     issues_final = issues_final.reindex(['key','TODO','INPROGRESS','DONE','project','status.name'],axis=1)
 
 issues_final.to_csv("jiradump.csv")
