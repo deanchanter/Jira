@@ -3,6 +3,16 @@
 Created on Tue Jul 14 14:24:24 2020
 
 @author: DChanter
+
+dumps jira issues and transistion data for user defined filter
+
+the follows vars need to be defined 
+
+server = 
+usrn = 
+key =
+jirafilter =
+
 """
 
 
