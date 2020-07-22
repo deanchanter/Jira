@@ -110,7 +110,7 @@ issues_pivot=issues.pivot_table(index= ['key', 'project','status.name'] , column
 
 issues_final = issues_pivot.reset_index()
 
-if  (todo &  inProgress & done):
+if  (bool(todo) &  bool(inProgress) & bool(done)):
     issues_final = issues_final.reindex(['key','TODO','INPROGRESS','DONE','project','status.name'],axis=1)
 
 issues_final.to_csv("jiradump.csv")
