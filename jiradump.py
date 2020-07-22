@@ -10,7 +10,11 @@ from jira import JIRA
 import pandas as pd
 
 
-#issue = jira.issue('AAT-3', expand='changelog')
+server = 
+usrn = 
+key =
+jirafilter = 
+jira = jira = JIRA({'server':server}, basic_auth=(usrn, key))
 
 #print(issue)
 
@@ -20,8 +24,8 @@ allissues = []
 print("Exporting Issues!")
 while True:
     start_idx = block_num*block_size
-    issues = jira.search_issues('filter = "Afgroup just Stories for AA"',startAt = start_idx, maxResults = block_size, expand='changelog')
-    #issues = jira.search_issues('key = ITSM-41 ',startAt = start_idx, maxResults = block_size, expand='changelog')
+    issues = jira.search_issues(jirafilter,startAt = start_idx, maxResults = block_size, expand='changelog')
+
     if len(issues) == 0:
         # Retrieve issues until there are no more to come
         break
